@@ -3,13 +3,13 @@ import hbs from "express-hbs";
 import path from "path";
 import {indexRoutes} from "./routes/indexRoutes.js";
 
-const app = express();
+export const app = express();
 app.engine('hbs', hbs.express4());
 app.set("view engine", "hbs");
 app.set("views", path.resolve("views"));
 
 app.use(express.static(path.resolve("public")));
-app.use(indexRoutes)
+app.use(indexRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
