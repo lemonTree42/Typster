@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "test": "mocha ./test/* --exit"
@@ -18,7 +19,8 @@
   },
   "homepage": "https://github.com/lemonTree42/Typster#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-hbs": "^2.3.4"
   },
   "devDependencies": {
     "mocha": "^8.2.1",

@@ -1,16 +1,17 @@
-// importing express framework
-const express = require("express");
+import express from "express";
+import hbs from "express-hbs";
+import path from "path";
+import {indexRoutes} from "./routes/indexRoutes.js";
 
 const app = express();
+app.engine('hbs', hbs.express4());
+app.set("view engine", "hbs");
+app.set("views", path.resolve("views"));
 
-// Respond with "hello world" for requests that hit our root "/"
-app.get("/", function (req, res) {
-    return res.send("Hello World via Git-Actions 2");
+app.use(express.static(path.resolve("public")));
+app.use(indexRoutes)
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
 });
-
-// listen to port 7000 by default
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Server is running");
-});
-
-module.exports = app;
