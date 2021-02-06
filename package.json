@@ -1,0 +1,27 @@
+{
+  "name": "typster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha ./test/* --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lemonTree42/Typster.git"
+  },
+  "author": "joel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lemonTree42/Typster/issues"
+  },
+  "homepage": "https://github.com/lemonTree42/Typster#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1",
+    "supertest": "^6.1.3"
+  }
+}
