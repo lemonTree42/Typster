@@ -10,7 +10,8 @@ app.set("view engine", "hbs");
 app.set("views", path.resolve("views"));
 
 app.use(morgan('dev'));
-app.use(indexRoutes)
+app.use(express.static(path.resolve('public')));
+app.use(indexRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

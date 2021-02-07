@@ -1,5 +1,6 @@
 h1 {
-    font-family: Papyrus;
+    font-family: Papyrus, serif;
+    color: red;
 }
 
 button {
