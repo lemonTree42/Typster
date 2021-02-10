@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/lemonTree42/Typster#readme",
   "dependencies": {
-    "body-parser": "latest",
     "express": "^4.17.1",
     "express-hbs": "^2.3.4",
     "http-errors": "^1.8.0",

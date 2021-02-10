@@ -1,7 +1,6 @@
 import express from "express";
 import hbs from "express-hbs";
 import morgan from "morgan";
-import bodyParser from 'body-parser';
 import path from "path";
 import session from "express-session";
 import createError from 'http-errors';
@@ -16,8 +15,8 @@ app.engine('hbs', hbs.express4());
 app.set("view engine", "hbs");
 app.set("views", path.resolve("views"));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use(session({secret: 'casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda', resave: false, saveUninitialized: true}));
 app.use(sessionUserSettings);
 app.use(express.static(path.resolve('public')));
