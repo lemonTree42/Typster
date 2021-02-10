@@ -1,0 +1,39 @@
+<h2>Join</h2>
+<div id="game-table-container"></div>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Players</th>
+            <th>Join</th>
+        </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+</table>
+<script>
+    const gameTableContainer = document.getElementById("game-table-container");
+    const tableBody = document.getElementById("table-body");
+
+    function renderGameTable(games) {
+        let result = "";
+        for(const o of games) {
+            result += `<tr>
+                            <td>${o.id}</td>
+                            <td>${o.title}</td>
+                            <td>${o.players.length}</td>
+                            <td><form action='/game/${o.id}/player' method='post'><button>Join</button></form></td>
+                        </tr>`;
+        }
+        return result;
+    }
+
+    const updateGameTable = async function() {
+        const response = await fetch("/games");
+        const games = await response.json();
+        tableBody.innerHTML = renderGameTable(games);
+        setTimeout(updateGameTable, 1000);
+    };
+
+    updateGameTable();
+</script>

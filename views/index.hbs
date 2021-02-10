@@ -1,2 +1,6 @@
-<button>Host</button>
-<button>Join</button>
+<h2>Index</h2>
+<form method="post">
+    <label>Nickname<input name="nickname" required></label>
+    <button formaction="/user?route=join" id="join-button">Join</button>
+    <button formaction="/user?route=host" id="host-button">Host</button>
+</form>
