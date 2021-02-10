@@ -1,5 +1,5 @@
 # Typster
-test
+A small typing game.
 
-# Deployment
+## Deployment
 https://typster42.herokuapp.com
