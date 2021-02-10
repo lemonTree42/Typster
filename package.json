@@ -23,7 +23,8 @@
     "express-hbs": "^2.3.4",
     "http-errors": "^1.8.0",
     "morgan": "^1.10.0",
-    "ws": "^7.4.3"
+    "ws": "^7.4.3",
+    "express-session": "^1.17.1"
   },
   "devDependencies": {
     "express-session": "^1.17.1",
