@@ -1,17 +1,17 @@
+import {playerSocketMap} from "./playerSocketMap.js";
+
 export class Game {
-    constructor(host, text, title) {
-        this.players = [];
-        this.players.push(host);
-        this.host = host;
+    constructor(hostId, text, title) {
+        this.players = [hostId];
+        this.hostId = hostId;
         this.text = text;
         this.title = title;
     }
 
-    add(player) {
-        this.players.push(player);
-    }
-
-    setID(id) {
-        this.id = id;
+    start() {
+        console.log("------------------");
+        for(const p of this.players) {
+            playerSocketMap[p.nickname].emit('EVENT_START_GAME', {hoi: "duleu"});
+        }
     }
 }

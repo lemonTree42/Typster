@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../js/controller/gameController.js" type="module" defer></script>
+    <script src = "/socket.io/socket.io.js"></script>
+    <script src="../js/controller/gameController.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 </head>
 <body>
@@ -12,17 +13,16 @@
     <div id="lobby-container">
         <h2>Lobby</h2>
         <div id="players-container"></div>
+        <button id="start-button">Start Game</button>
         <script id="players-template" type="text/x-handlebars-template">
             <ul>
                 {{#each game.players}}
                 <li>{{nickname}}</li>
                 {{/each}}
             </ul>
-            {{#if isHost}}
-            <button>Start Game</button>
-            {{else}}
-            <p>Waiting for Host to start</p>
-            {{/if}}
+            {{#unless isHost}}
+                <p>Waiting for Host to start</p>
+            {{/unless}}
         </script>
     </div>
     <div id="game-container"></div>

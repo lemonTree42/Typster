@@ -1,23 +1,34 @@
+import {Game} from "./game.js";
+import Datastore from 'nedb-promises';
+
 class GameStore {
     constructor() {
-        this.games = [];
+        this.db = new Datastore({filename: './data/games.db', autoload: true});
     }
 
-    add(game) {
-        this.games.push(game);
-        return this.games.length-1;
+    async add(hostId, gameText, gameTitle) {
+        return await this.db.insert(new Game(hostId, gameText, gameTitle));
     }
 
-    get(id) {
-        return this.games[id];
+    async get(id) {
+        return await this.db.findOne({_id: id}, {players: 1, text: 1, title: 1});
     }
 
-    all() {
-        return this.games;
+    async all() {
+        return await this.db.find({});
     }
 
     exists(id) {
-        return this.games.length > id && id >= 0;
+        return !!(this.get(id));
+    }
+
+    async addPlayerToGame(gameId, playerId) {
+        return await this.db.update({ _id: gameId }, { $push: { players: playerId } }, {});
+    }
+
+    async gameContainsPlayer(gameId, playerId) {
+        return !!(await this.db.findOne({_id: gameId, players: [playerId]}));
+        //return result.players.some(pid => pid===playerId);
     }
 }
 
