@@ -1,9 +1,7 @@
 import {playerSocketMap} from "./playerSocketMap.js";
 
 export class Game {
-    constructor(hostId, text, title) {
-        this.players = [hostId];
-        this.hostId = hostId;
+    constructor(text, title) {
         this.text = text;
         this.title = title;
     }

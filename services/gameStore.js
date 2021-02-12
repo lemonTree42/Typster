@@ -25,11 +25,6 @@ class GameStore {
     async addPlayerToGame(gameId, playerId) {
         return await this.db.update({ _id: gameId }, { $push: { players: playerId } }, {});
     }
-
-    async gameContainsPlayer(gameId, playerId) {
-        return !!(await this.db.findOne({_id: gameId, players: [playerId]}));
-        //return result.players.some(pid => pid===playerId);
-    }
 }
 
 export const gameStore = new GameStore();

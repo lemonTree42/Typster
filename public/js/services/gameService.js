@@ -6,8 +6,8 @@ export class GameService {
         this.socket = socket;
     }
 
-    async getPlayers() {
-        const result = await httpService.ajax("GET", `/game/${this.gameId}/players`, undefined);
+    async getLobby() {
+        const result = await httpService.ajax("GET", `/game/${this.gameId}/lobby`, undefined);
         console.log(result);
         return result;
     }

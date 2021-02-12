@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/", gameController.createGame);
 router.get("/:gameId", gameController.renderGame);
-router.get("/:gameId/players", gameController.getPlayers);
+router.get("/:gameId/lobby", gameController.getLobby);
 router.post("/:gameId/player", gameController.addPlayer);
 
 export const gameRoutes = router;

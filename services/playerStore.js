@@ -6,8 +6,8 @@ class PlayerStore {
         this.db = new Datastore({filename: './data/players.db', autoload: true});
     }
 
-    async add(nickname, req) {
-        return await this.db.insert(new Player(nickname));
+    async add(nickname, gameId, host) {
+        return await this.db.insert(new Player(nickname, gameId, host));
     }
 
     async get(id) {
@@ -16,6 +16,22 @@ class PlayerStore {
 
     async all() {
         return await this.db.find({});
+    }
+
+    async allOfGame(gameId) {
+        return await this.db.find({game: gameId});
+    }
+
+    async playerIsInGame(playerId, gameId) {
+        return !!(await this.db.findOne({_id: playerId, game: gameId}));
+    }
+
+    async getHostOfGame(gameId) {
+        return await this.db.findOne({game: gameId, host: true});
+    }
+
+    async countPlayers(gameId) {
+        return await this.db.count({game: gameId});
     }
 }
 

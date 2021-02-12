@@ -47,9 +47,9 @@ async function initApp() {
 
     const updatePlayers = async function() {
         if(state === STATE_LOBBY) {
-            const players = await gameService.getPlayers();
-            playersLobbyContainer.innerHTML = createPlayersHtml(players);
-            isHost = players.isHost;
+            const result = await gameService.getLobby();
+            isHost = result.isHost;
+            playersLobbyContainer.innerHTML = createPlayersHtml(result);
             setTimeout(updatePlayers, 1000);
         }
     };
