@@ -1,34 +1,46 @@
 import {Game} from "./game.js";
-import Datastore from 'nedb-promises';
+import Datastore from 'nedb';
 
 class GameStore {
     constructor() {
         this.db = new Datastore({filename: './data/games.db', autoload: true});
     }
 
-    async add(hostId, gameText, gameTitle) {
-        return await this.db.insert(new Game(hostId, gameText, gameTitle));
+    add(hostId, gameText, gameTitle, callback) {
+        this.db.insert(new Game(hostId, gameText, gameTitle), function(err, doc) {
+            callback(doc);
+        });
     }
 
-    async get(id) {
-        return await this.db.findOne({_id: id}, {players: 1, text: 1, title: 1});
+    get(id, callback) {
+        this.db.findOne({_id: id}, function(err, doc) {
+            if(err) throw err;
+            callback(doc);
+        });
     }
 
-    async all() {
-        return await this.db.find({});
+    all(callback) {
+        this.db.find({}, function(err, doc) {
+            callback(doc);
+        });
     }
 
-    exists(id) {
-        return !!(this.get(id));
+    exists(id, callback) {
+        this.get(id, function(doc) {
+            callback(!!doc);
+        });
     }
 
-    async addPlayerToGame(gameId, playerId) {
-        return await this.db.update({ _id: gameId }, { $push: { players: playerId } }, {});
+    addPlayerToGame(gameId, playerId, callback) {
+        this.db.update({ _id: gameId }, { $push: { players: playerId } }, {}, function(err, doc) {
+            callback(doc);
+        });
     }
 
-    async gameContainsPlayer(gameId, playerId) {
-        return !!(await this.db.findOne({_id: gameId, players: [playerId]}));
-        //return result.players.some(pid => pid===playerId);
+    gameContainsPlayer(gameId, playerId, callback) {
+        this.db.findOne({_id: gameId, players: [playerId]}, function(err, doc) {
+            callback(!!doc);
+        });
     }
 }
 

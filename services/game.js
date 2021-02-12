@@ -6,6 +6,7 @@ export class Game {
         this.hostId = hostId;
         this.text = text;
         this.title = title;
+        this.test = {joi: "hoi"};
     }
 
     start() {
