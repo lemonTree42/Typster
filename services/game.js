@@ -5,11 +5,4 @@ export class Game {
         this.text = text;
         this.title = title;
     }
-
-    start() {
-        console.log("------------------");
-        for(const p of this.players) {
-            playerSocketMap[p.nickname].emit('EVENT_START_GAME', {hoi: "duleu"});
-        }
-    }
 }

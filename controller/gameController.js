@@ -3,6 +3,8 @@ import {Player} from "../services/player.js";
 import {Game} from "../services/game.js";
 import {gameStore} from "../services/gameStore.js"
 import {playerStore} from "../services/playerStore.js"
+import {GameRunner} from "../services/gameRunner.js"
+import {gameRunnerMap} from "../services/gameRunnerMap.js";
 import path from "path";
 
 class GameController {
@@ -10,6 +12,7 @@ class GameController {
         const game = await gameStore.add(req.body.gameText, req.body.gameTitle);
         const host = await playerStore.add(req.session.user.nickname, game._id, true);
         req.session.user.playerId = host._id;
+        gameRunnerMap[game._id] = new GameRunner(game._id, "lobby");
         res.redirect(`/game/${game._id}`);
     }
 
