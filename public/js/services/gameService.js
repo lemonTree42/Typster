@@ -11,9 +11,7 @@ export class GameService {
     }
 
     async getPlayers() {
-        const result = await httpService.ajax("GET", `/game/${this.gameId}/players`, undefined);
-        debugger;
-        return result;
+        return await httpService.ajax("GET", `/game/${this.gameId}/players`, undefined);
     }
 
     startGame() {

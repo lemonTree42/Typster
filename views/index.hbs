@@ -1,7 +1,5 @@
-<h2>Index</h2>
-<form method="post">
-    <label>Nickname<input name="nickname" required></label>
-    <button formaction="/user?route=join" id="join-button" class="neumorphic">Join</button>
-    <button formaction="/user?route=host" id="host-button" class="i">Host</button>
-    <div class="neumorphic test">Test</div>
+<form method="post" autocomplete="off">
+    <label><input name="nickname" placeholder="Nickname *" required></label>
+    <button formaction="/user?route=join" id="join-button">Join</button>
+    <button formaction="/user?route=host" id="host-button">Host</button>
 </form>

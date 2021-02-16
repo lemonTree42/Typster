@@ -122,7 +122,7 @@ async function initApp() {
     function renderRanking(ranking) {
         let result = '';
         for(const i in ranking) {
-            result += `<tr><td>${Number(i)+1}</td><td>${ranking[i][1].nickname}</td><td>${Math.round(ranking[i][1].cpm)}</td></tr>`;
+            result += `<tr><td>${Number(i)+1}</td><td style="color: rgba(${ranking[i][1].color.r}, ${ranking[i][1].color.g}, ${ranking[i][1].color.b})">${ranking[i][1].nickname}</td><td>${Math.round(ranking[i][1].cpm)}</td></tr>`;
         }
         document.getElementById("ranking-container-tbody").innerHTML = result;
     }
@@ -134,7 +134,6 @@ async function initApp() {
 
     function normalizeSpanWidth() {
         const spans = [...document.querySelectorAll("span")];
-        debugger;
         const max = Math.max.apply(Math, spans.map(e => e.getBoundingClientRect().width));
         console.log(max);
         spans.forEach(e => e.style.flex = `0 0 ${max}px`);
@@ -151,6 +150,9 @@ async function initApp() {
         if(lastCharacter===game.text[cursor]) {
             gameTextCursorOwn.style.background = `rgba(${gameTextCursorOwnColor.r}, ${gameTextCursorOwnColor.g}, ${gameTextCursorOwnColor.b}, 0.3)`;
             gameService.sendCorrectInput(cursor+1);
+            if(/\s/.test(lastCharacter)) {
+                gameInputField.value = '';
+            }
             if(++cursor<game.text.length) {
                 renderCursor(gameTextCursorOwn, cursor);
             } else {
@@ -165,7 +167,7 @@ async function initApp() {
     function renderWaitingText() {
         gameTextCursorOwn.hidden = true;
         gameInputField.hidden = true;
-        gameTextContainer.insertAdjacentHTML('afterend', 'Waiting for other players to finish.');
+        gameTextContainer.insertAdjacentHTML('afterend', '<button class="waiting-text" disabled>Waiting for other players to finish</button>');
     }
 
     function renderCursor(cursor, index) {

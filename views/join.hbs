@@ -1,19 +1,24 @@
-<h2>Join</h2>
 <div id="game-table-container"></div>
-<table>
+<table id="join-table">
+    <colgroup>
+        <col style="width:15%">
+        <col style="width:25%">
+        <col style="width:25%">
+        <col style="width:40%">
+    </colgroup>
     <thead>
         <tr>
             <th>ID</th>
             <th>Title</th>
             <th>Players</th>
-            <th>Join</th>
+            <th></th>
         </tr>
     </thead>
-    <tbody id="table-body"></tbody>
+    <tbody id="join-table-body"></tbody>
 </table>
 <script>
     const gameTableContainer = document.getElementById("game-table-container");
-    const tableBody = document.getElementById("table-body");
+    const tableBody = document.getElementById("join-table-body");
 
     function renderGameTable(games) {
         let result = "";

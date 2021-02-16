@@ -9,23 +9,28 @@
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 </head>
 <body>
-    <h2 id="lobby-game-title"></h2>
+    <h1 id="lobby-game-title"></h1>
     <div id="lobby-container">
-        <p id="lobby-game-text"></p>
-        <div id="players-container"></div>
-        <script id="players-template" type="text/x-handlebars-template">
-            <ul>
-                {{#each players}}
-                <li>{{this.1.nickname}}</li>
-                {{/each}}
-            </ul>
-        </script>
+        <div class="neuphormism-group">
+            <p>Players:</p>
+            <div id="players-container"></div>
+            <script id="players-template" type="text/x-handlebars-template">
+                <ul>
+                    {{#each players}}
+                    <li style="color: rgba({{this.1.color.r}}, {{this.1.color.g}}, {{this.1.color.b}}, 1)">{{this.1.nickname}}</li>
+                    {{/each}}
+                </ul>
+            </script>
+            <p>Text:</p>
+            <p id="lobby-game-text"></p>
+        </div>
         <button id="start-button">Start Game</button>
-        <p id="waiting-for-host-text">Waiting for Host to start</p>
+        <button disabled id="waiting-for-host-text" class="waiting-text">Waiting for Host to start</button>
+
     </div>
     <div id="game-container" hidden>
         <div id="game-text-container"></div>
-        <input id="game-input-field" autocomplete="off"/>
+        <label><input id="game-input-field" onpaste="return false;" ondrop="return false;" autocomplete="off"/></label>
     </div>
     <div id="ranking-container" hidden>
         <table>

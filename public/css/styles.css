@@ -1,6 +1,6 @@
 body {
     padding: 16px;
-    width: 320px;
+    width: 640px;
     margin: 0 auto;
 }
 body, html {
@@ -11,10 +11,103 @@ body, p, input, select, textarea, button {
     letter-spacing: -0.2px;
     font-size: 16px;
 }
+p, li {
+    color: #61677C;
+}
+h1 {
+    padding: 32px 0;
+    text-align: center;
+    color: #BABECC;
+    text-shadow: 1px 1px 1px #FFF;
+}
+button, input, textarea, table, .neuphormism-group {
+    border: 0;
+    outline: 0;
+    font-size: 16px;
+    border-radius: 320px;
+    padding: 16px;
+    background-color: #EBECF0;
+    text-shadow: 1px 1px 0 #FFF;
+}
+.neuphormism-group {
+    border-radius: 25px;
+    box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+}
+textarea {
+    border-radius: 25px;
+    resize: none;
+    height: 200px;
+    margin: 24px auto;
+}
+label {
+    display: block;
+    width: 320px;
+    margin: 0 auto;
+}
+input, textarea {
+    margin-right: 8px;
+    box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+}
+input:focus, textarea:focus {
+    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+button {
+    color: #61677C;
+    font-weight: bold;
+    box-shadow: -5px -5px 20px #FFF, 5px 5px 20px #BABECC;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    font-weight: 600;
+    display: block;
+    width: 320px;
+    margin: 24px auto;
+}
+button:hover {
+    box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #BABECC;
+}
+button:active {
+    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+
+table button {
+    margin: 5px auto;
+    width: 100%;
+}
+td {
+    text-align: center;
+}
+table {
+    table-layout: fixed;
+    border-radius: 25px;
+    padding: 20px;
+    color: #61677C;
+    width: 320px;
+    margin: 0 auto;
+    box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+}
+
+.waiting-text {
+    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+.waiting-text:hover {
+    box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+}
+#lobby-game-text {
+    margin-left: 25px;
+}
 
 #game-text-container {
     display: flex;
     flex-wrap: wrap;
+    font-family: monospace, sans-serif;
+    margin-bottom: 24px;
+}
+#game-input-field {
     font-family: monospace, sans-serif;
 }
 
