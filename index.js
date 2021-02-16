@@ -11,9 +11,8 @@ import {indexRoutes} from "./routes/indexRoutes.js";
 import {gameRoutes} from "./routes/gameRoutes.js";
 import {gamesRoutes} from "./routes/gamesRoutes.js";
 import {sessionUserSettings} from "./utils/sessionUserSettings.js";
+import {gameRunnerStore} from "./services/gameRunnerStore.js"
 import {playerSocketMap} from "./services/playerSocketMap.js";
-import {gameStore} from "./services/gameStore.js"
-import {gameRunnerMap} from "./services/gameRunnerMap.js";
 
 export const app = express();
 const httpServer = createServer(app);
@@ -31,10 +30,15 @@ io.use(sharedsession(sessionobj));
 app.use(sessionUserSettings);
 
 io.on("connection", (socket) => {
-    playerSocketMap[socket.handshake.session.user.playerId] = socket;
+    playerSocketMap[socket.handshake.sessionID] = socket;
+    socket.emit("EVENT_SERVER_PLAYERID", socket.handshake.sessionID);
     socket.on("EVENT_CLIENT_INVOKE_START_GAME", (gameId) => {
         console.log("EVENT_CLIENT_INVOKE_START_GAME: "+gameId);
-        gameRunnerMap[gameId].start();
+        gameRunnerStore.get(gameId).start();
+    });
+    socket.on("EVENT_CLIENT_CORRECT_INPUT", ({gameId, progress}) => {
+        console.log("EVENT_CLIENT_CORRECT_INPUT: "+gameId);
+        gameRunnerStore.get(gameId).updatePlayerScore(socket.handshake.sessionID, progress);
     });
 });
 

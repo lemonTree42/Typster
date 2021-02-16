@@ -1,38 +1,36 @@
 import {Player} from "./player.js";
-import Datastore from 'nedb-promises';
 
-class PlayerStore {
+export class PlayerStore {
     constructor() {
-        this.db = new Datastore({filename: './data/players.db', autoload: true});
+        this.store = {};
     }
 
-    async add(nickname, gameId, host) {
-        return await this.db.insert(new Player(nickname, gameId, host));
+    add(id, nickname, color) {
+        this.store[id] = new Player(nickname, color);
     }
 
-    async get(id) {
-        return await this.db.findOne({_id: id});
+    get(id) {
+        return this.store[id];
     }
 
-    async all() {
-        return await this.db.find({});
+    allIDs() {
+        return Object.keys(this.store);
     }
 
-    async allOfGame(gameId) {
-        return await this.db.find({game: gameId});
+    entries() {
+        return Object.entries(this.store);
     }
 
-    async playerIsInGame(playerId, gameId) {
-        return !!(await this.db.findOne({_id: playerId, game: gameId}));
+    contains(id) {
+        return !!this.store[id];
     }
 
-    async getHostOfGame(gameId) {
-        return await this.db.findOne({game: gameId, host: true});
+    size() {
+        return Object.keys(this.store).length;
     }
 
-    async countPlayers(gameId) {
-        return await this.db.count({game: gameId});
+    update(id, progress, cpm) {
+        this.store[id].progress = progress;
+        this.store[id].cpm = cpm;
     }
 }
-
-export const playerStore = new PlayerStore();

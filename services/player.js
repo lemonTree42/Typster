@@ -1,8 +1,8 @@
 export class Player {
-    constructor(nickname, game, host) {
+    constructor(nickname, color) {
         this.nickname = nickname;
-        this.game = game;
-        this.host = host;
         this.progress = 0;
+        this.color = color;
+        this.cpm = 0;
     }
 }

@@ -3,29 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <script src = "/socket.io/socket.io.js"></script>
     <script src="../js/controller/gameController.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 </head>
 <body>
-    <h1>Typster</h1>
-    <h2>Game</h2>
+    <h2 id="lobby-game-title"></h2>
     <div id="lobby-container">
-        <h2>Lobby</h2>
+        <p id="lobby-game-text"></p>
         <div id="players-container"></div>
-        <button id="start-button">Start Game</button>
         <script id="players-template" type="text/x-handlebars-template">
             <ul>
                 {{#each players}}
-                <li>{{nickname}}</li>
+                <li>{{this.1.nickname}}</li>
                 {{/each}}
             </ul>
-            {{#unless isHost}}
-                <p>Waiting for Host to start</p>
-            {{/unless}}
         </script>
+        <button id="start-button">Start Game</button>
+        <p id="waiting-for-host-text">Waiting for Host to start</p>
     </div>
-    <div id="game-container"></div>
-    <div id="ranking-container"></div>
+    <div id="game-container" hidden>
+        <div id="game-text-container"></div>
+        <input id="game-input-field" autocomplete="off"/>
+    </div>
+    <div id="ranking-container" hidden>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>CPM</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-container-tbody"></tbody>
+        </table>
+        <form method="post" id="ranking-play-again-form"><button>Play Again</button></form>
+        <form action="/host" method="get"><button>Host New Game</button></form>
+        <form action="/join" method="get"><button>Join</button></form>
+    </div>
 </body>
 </html>

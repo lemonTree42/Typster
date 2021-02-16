@@ -19,10 +19,10 @@
         let result = "";
         for(const o of games) {
             result += `<tr>
-                            <td>${o._id}</td>
+                            <td>${o.id}</td>
                             <td>${o.title}</td>
                             <td>${o.playerCount}</td>
-                            <td><form action='/game/${o._id}/player' method='post'><button>Join</button></form></td>
+                            <td><form action='/game/${o.id}/player' method='post'><button>Join</button></form></td>
                         </tr>`;
         }
         return result;

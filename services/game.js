@@ -1,8 +1,8 @@
-import {playerSocketMap} from "./playerSocketMap.js";
-
 export class Game {
-    constructor(text, title) {
+    constructor(text, title, hostId, maxTime) {
         this.text = text;
         this.title = title;
+        this.hostId = hostId;
+        this.maxTime = maxTime;
     }
 }

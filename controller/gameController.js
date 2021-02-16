@@ -1,42 +1,52 @@
 import createError from 'http-errors';
-import {Player} from "../services/player.js";
-import {Game} from "../services/game.js";
-import {gameStore} from "../services/gameStore.js"
-import {playerStore} from "../services/playerStore.js"
-import {GameRunner} from "../services/gameRunner.js"
-import {gameRunnerMap} from "../services/gameRunnerMap.js";
+import {gameRunnerStore} from "../services/gameRunnerStore.js"
 import path from "path";
 
 class GameController {
-    async createGame(req, res) {
-        const game = await gameStore.add(req.body.gameText, req.body.gameTitle);
-        const host = await playerStore.add(req.session.user.nickname, game._id, true);
-        req.session.user.playerId = host._id;
-        gameRunnerMap[game._id] = new GameRunner(game._id, "lobby");
-        res.redirect(`/game/${game._id}`);
+    createGame(req, res) {
+        const gameRunner = gameRunnerStore.add(req.body.gameText, req.body.gameTitle, req.sessionID, req.body.maxTime);
+        gameRunner.addPlayer(req.sessionID, req.session.user.nickname);
+        res.redirect(`/game/${gameRunner.id}`);
     }
 
-    async renderGame(req, res, next) {
-        if(! await gameStore.exists(req.params.gameId)) {
+    reloadGame(req, res) {
+        let gameRunner = gameRunnerStore.get(req.params.gameId);
+        if(gameRunner.status!=='lobby') {
+            gameRunner = gameRunnerStore.reload(req.params.gameId, req.sessionID);
+        }
+        gameRunner.addPlayer(req.sessionID, req.session.user.nickname);
+        res.redirect(`/game/${gameRunner.id}`);
+    }
+
+    renderGame(req, res, next) {
+        if(!gameRunnerStore.exists(req.params.gameId)) {
             next(createError(404, "Game ID doesn't exist!"));
-        } else if(! await playerStore.playerIsInGame(req.session.user.playerId, req.params.gameId)) {
+        } else if(!gameRunnerStore.get(req.params.gameId).playerStore.contains(req.sessionID)) {
             res.redirect("/join");
         } else {
             res.sendFile("html/game.html", {root: path.resolve('public')});
         }
     }
 
-    async addPlayer(req, res) {
-        const player = await playerStore.add(req.session.user.nickname, req.params.gameId, false);
-        req.session.user.playerId = player._id;
+    addPlayer(req, res) {
+        gameRunnerStore.get(req.params.gameId).addPlayer(req.sessionID, req.session.user.nickname);
         res.redirect(`/game/${req.params.gameId}`);
     }
 
-    async getLobby(req, res, next) {
-        if(gameStore.exists(req.params.gameId)) {
-            const players = await playerStore.allOfGame(req.params.gameId);
-            const host = (await playerStore.getHostOfGame(req.params.gameId))._id;
-            res.json({players, isHost: host===req.session.user.playerId});
+    getGame(req, res, next) {
+        const gameRunner = gameRunnerStore.get(req.params.gameId);
+        if(gameRunner) {
+            res.json({isHost: gameRunner.game.hostId===req.sessionID, ...gameRunner.game});
+        } else {
+            next(createError(404, "Game not found"));
+        }
+    }
+
+    getPlayers(req, res, next) {
+        const gameRunner = gameRunnerStore.get(req.params.gameId);
+        if(gameRunner) {
+            const players = gameRunner.playerStore.entries();
+            res.json({players});
         } else {
             next(createError(404, "Game not found"));
         }

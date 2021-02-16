@@ -6,9 +6,13 @@ export class GameService {
         this.socket = socket;
     }
 
-    async getLobby() {
-        const result = await httpService.ajax("GET", `/game/${this.gameId}/lobby`, undefined);
-        console.log(result);
+    async getGame() {
+        return await httpService.ajax("GET", `/game/${this.gameId}/data`, undefined);
+    }
+
+    async getPlayers() {
+        const result = await httpService.ajax("GET", `/game/${this.gameId}/players`, undefined);
+        debugger;
         return result;
     }
 
@@ -16,8 +20,7 @@ export class GameService {
         this.socket.emit("EVENT_CLIENT_INVOKE_START_GAME", this.gameId);
     }
 
-    // socket.on('EVENT_START_GAME', function(msg) {
-    //     console.log("MESSAGE: ");
-    //     console.log(msg);
-    // });
+    sendCorrectInput(progress) {
+        this.socket.emit("EVENT_CLIENT_CORRECT_INPUT", {gameId: this.gameId, progress});
+    }
 }

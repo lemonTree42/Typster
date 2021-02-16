@@ -1,14 +1,13 @@
 import express from "express";
-import {gameStore} from "../services/gameStore.js"
-import {playerStore} from "../services/playerStore.js"
+import {gameRunnerStore} from "../services/gameRunnerStore.js"
 const router = express.Router();
 
-router.get("/", async function(req, res) {
-    const result = (await gameStore.all());
-    for(const e of result) {
-        e.playerCount = await playerStore.countPlayers(e._id);
+router.get("/", function(req, res) {
+    const result = [];
+    for(const e of gameRunnerStore.all('lobby')) {
+        result.push({id: e.id, title: e.game.title, playerCount: e.playerStore.size()});
     }
-    await res.json(result);
+    res.json(result);
 });
 
 export const gamesRoutes = router;
