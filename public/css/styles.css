@@ -83,12 +83,17 @@ td {
 }
 table {
     table-layout: fixed;
+}
+#game-table-container {
     border-radius: 25px;
-    padding: 20px;
     color: #61677C;
     width: 320px;
     margin: 0 auto;
-    box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+}
+
+#no-games {
+    margin: 10px;
+    text-align: center;
 }
 
 .waiting-text {
@@ -99,6 +104,16 @@ table {
 }
 #lobby-game-text {
     margin-left: 25px;
+}
+
+#ranking-table {
+    table-layout: fixed;
+    border-radius: 25px;
+    padding: 20px;
+    color: #61677C;
+    width: 320px;
+    margin: 0 auto;
+    box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
 }
 
 #game-text-container {

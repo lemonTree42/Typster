@@ -1,34 +1,37 @@
-<div id="game-table-container"></div>
-<table id="join-table">
-    <colgroup>
-        <col style="width:15%">
-        <col style="width:25%">
-        <col style="width:25%">
-        <col style="width:40%">
-    </colgroup>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Players</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="join-table-body"></tbody>
-</table>
+<div id="game-table-container" class="neuphormism-group"></div>
 <script>
     const gameTableContainer = document.getElementById("game-table-container");
-    const tableBody = document.getElementById("join-table-body");
 
     function renderGameTable(games) {
-        let result = "";
+        let result = `
+                <table id="join-table">
+                    <colgroup>
+                        <col style="width:15%">
+                        <col style="width:25%">
+                        <col style="width:25%">
+                        <col style="width:40%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Players</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="join-table-body">`;
         for(const o of games) {
-            result += `<tr>
-                            <td>${o.id}</td>
-                            <td>${o.title}</td>
-                            <td>${o.playerCount}</td>
-                            <td><form action='/game/${o.id}/player' method='post'><button>Join</button></form></td>
-                        </tr>`;
+            result += `
+                    <tr>
+                        <td>${o.id}</td>
+                        <td>${o.title}</td>
+                        <td>${o.playerCount}</td>
+                        <td><form action='/game/${o.id}/player' method='post'><button>Join</button></form></td>
+                    </tr>`;
+        }
+        result += `</tbody></table>`;
+        if(games.length===0) {
+            result += '<p id="no-games">No games available</p>'
         }
         return result;
     }
@@ -36,7 +39,7 @@
     const updateGameTable = async function() {
         const response = await fetch("/games");
         const games = await response.json();
-        tableBody.innerHTML = renderGameTable(games);
+        gameTableContainer.innerHTML = renderGameTable(games);
         setTimeout(updateGameTable, 1000);
     };
 
