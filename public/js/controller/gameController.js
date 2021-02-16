@@ -15,6 +15,7 @@ async function initApp() {
     let gameCurrentSpan = document.getElementById("0");
     let gameTextCursorOwn;
     let gameTextCursorOwnColor = {};
+    const countDownShield = document.getElementById("game-countdown-shield");
 
     const playersLobbyTemplate = document.getElementById("players-template").innerHTML;
     const createPlayersHtml = Handlebars.compile(playersLobbyTemplate);
@@ -60,6 +61,21 @@ async function initApp() {
         }
     }
 
+    async function startCountdown(start) {
+        const countdown = async function(index) {
+            if(index>0) {
+                countDownShield.innerText = index;
+                setTimeout(() => countdown(index-1), 1000);
+            } else {
+                gameInputField.focus();
+                countDownShield.hidden = true;
+                const result = await gameService.getPlayers();
+                renderAllCursors(result.players);
+            }
+        };
+        await countdown(start);
+    }
+
     async function renderUI() {
         switch (state) {
             case STATE_LOBBY:
@@ -75,8 +91,7 @@ async function initApp() {
                 gameContainer.hidden = false;
                 rankingContainer.hidden = true;
                 normalizeSpanWidth();
-                const result = await gameService.getPlayers();
-                renderAllCursors(result.players);
+                await startCountdown(5);
                 break;
             case STATE_RANKING:
                 lobbyContainer.hidden = true;
@@ -180,7 +195,7 @@ async function initApp() {
 
     function renderAllCursors(players) {
         for(const p of players) {
-            gameTextContainer.insertAdjacentHTML('beforebegin', `<div id="game-text-cursor-${p[0]}" class="cursor" style="background-color: rgba(${p[1].color.r}, ${p[1].color.g}, ${p[1].color.b}, 0.3)"></div>`);
+            gameTextContainer.insertAdjacentHTML('afterend', `<div id="game-text-cursor-${p[0]}" class="cursor" style="background-color: rgba(${p[1].color.r}, ${p[1].color.g}, ${p[1].color.b}, 0.3)"></div>`);
             if(p[0]===playerId) {
                 gameTextCursorOwn = document.getElementById(`game-text-cursor-${p[0]}`);
                 gameTextCursorOwnColor = p[1].color;

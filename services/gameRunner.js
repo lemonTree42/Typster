@@ -28,7 +28,7 @@ export class GameRunner {
     start() {
         this.status = "ingame";
         this.broadcast("EVENT_SERVER_START_GAME", undefined);
-        this.START_TIME = performance.now();
+        this.START_TIME = performance.now()-5000;
     }
 
     showRanking() {

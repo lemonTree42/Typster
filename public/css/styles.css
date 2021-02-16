@@ -131,3 +131,17 @@ table {
     position: absolute;
     transition: all 0.1s;
 }
+
+#game-countdown-shield {
+    position: absolute;
+    color: #4f515c;
+    text-shadow: 2px 2px 5px #484848;
+    background-color: rgba(235, 236, 240, 0.8);
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 20em;
+    font-weight: bold;
+}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Typster</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <script src = "/socket.io/socket.io.js"></script>
     <script src="../js/controller/gameController.js" type="module"></script>
@@ -31,6 +31,7 @@
     <div id="game-container" hidden>
         <div id="game-text-container"></div>
         <label><input id="game-input-field" onpaste="return false;" ondrop="return false;" autocomplete="off"/></label>
+        <div id="game-countdown-shield"></div>
     </div>
     <div id="ranking-container" hidden>
         <table id="ranking-table">
