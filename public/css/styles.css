@@ -49,7 +49,7 @@ input, textarea {
     box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
     width: 100%;
     box-sizing: border-box;
-    transition: all 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out;
     appearance: none;
     -webkit-appearance: none;
 }
